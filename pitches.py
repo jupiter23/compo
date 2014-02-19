@@ -50,6 +50,7 @@ class Pitches():
   """
   def __init__(self, root = 277.2, tuning='just', degrees=[1], registers=1):
     self._degrees = degrees
+    self.len = len(degrees)
     self.setRoot(root, reset=False)
     self.setTuning(tuning)
     self.initSigs(len(degrees))
@@ -129,7 +130,7 @@ class Pitches():
 
 if __name__ == '__main__':
   s = Server().boot()
-  p = Pitches(tuning='just', root=200, degrees=[0,1,2,3])
+  p = Pitches(tuning='just', root=200, degrees=[0,4,7,11])
   count = 0
 
   def alternTuning():
@@ -149,10 +150,6 @@ if __name__ == '__main__':
     p.setDegrees(sig_pos=[0,1,2,3], degrees=degrees)
     count+=1
   
-  def changeOneDegree():
-    global count
-    
-    
   def changeRoot():
     if (p.getRoot() > 50):
 #      factor = 0.888 #major second
