@@ -1,5 +1,40 @@
 from pyo import *
 
+class Tuning():
+  # Generate pitch frequency values for a given root frequency for each tuning
+  # Consider moving to it's own class
+  def makeFreqLists(self, tuning, root=None):
+    if (root==None):
+      root=self._root
+    
+    self._freqs={
+      'just' : [root, root*16/15, root*9/8, root*6/5, root*5/4, root*4/3, root*64/45, root*3/2, root*8/5, root*5/3, root*16/9, root*15/8],
+      'equal_12' : [root * (2.**(i/12.))  for i in range(0, 11)],
+      'equal_5' : [root * (2. **(i/5.))  for i in range(0, 4)],
+      'pyth' : [root, root*1.053, root*1.125, root*1.85, root*1.265, root*1.333, root*1.404, root*1.424, root*1.5, root*1.58,
+        root*1.687, root*1.778, root*1.898],
+      'harmonic' : [root * i for i in range(1, 20)]
+    }
+  
+  def just(self, root):
+    return [root, root*16/15, root*9/8, root*6/5, root*5/4, root*4/3, root*64/45, root*3/2, root*8/5, root*5/3, root*16/9, root*15/8]
+    
+  def equal(self, root, num_tones):
+    return [root * (2.**(i/float(num_tones)))  for i in range(0, num_tones - 1)]
+  
+  def pyth(self, root):
+    return [root, root*1.053, root*1.125, root*1.85, root*1.265, root*1.333, root*1.404, root*1.424, root*1.5, root*1.58,
+      root*1.687, root*1.778, root*1.898]
+    
+  def harmonic(self, root, num_tones):
+    return [root * i for i in range(1, num_tones)]
+  
+  def funcsMap(self, tuning, **kwargs):
+    funcs = {'just':self.just, 'equal':self.equal, 'pyth':self.pyth, 'harmonic':self.harmonic}
+    return funcs[tuning]
+    
+  
+
 class Pitches():
   """
   A set of pitch frequency values wrapped in Sig pyo objects.
@@ -48,7 +83,7 @@ class Pitches():
           Not implemented yet
           Number of registers to calculate initially.
   """
-  def __init__(self, root = 277.2, tuning='just', degrees=[1], registers=1):
+  def __init__(self, root = 275, tuning='just', degrees=[1], registers=1):
     self._degrees = degrees
     self.len = len(degrees)
     self.setRoot(root, reset=False)
@@ -98,6 +133,17 @@ class Pitches():
     if (reset):
       self.setSigValues()
 
+    
+  # Wrap instance pitch frequencies values in Sig pyo objects
+  def setSigValues(self):
+    for i, sig in enumerate(self._sigs):
+      sig.setValue(self._pitches[i])
+      
+  # Change the pitch for a Sig
+  def setDegrees(self, pos, degrees):
+    for i, pos in enumerate(pos):
+      self._sigs[pos].setValue(self.getDegreeValue(degrees[i]))
+        
   # Given a scale degree, return the frequency value.
   def getDegreeValue(self, degree):
     length = len(self._freqs[self._tuning])
@@ -107,12 +153,7 @@ class Pitches():
     # Calculate value for degree frequency > 2*root
     else:
       return self._freqs[self._tuning][degree%length] * ((degree/length)+1)
-    
-  # Wrap instance pitch frequencies values in Sig pyo objects
-  def setSigValues(self):
-    for i, sig in enumerate(self._sigs):
-      sig.setValue(self._pitches[i])
-    
+         
   # Return all the Sig objects or the Sig objects indicated by the pos argument
   def getPitches(self, pos='all'):
     if (pos=='all'):
@@ -122,11 +163,9 @@ class Pitches():
   # Get root freq value
   def getRoot(self):
     return self._root
-  
-  # Change the pitch for a Sig
-  def setDegrees(self, pos, degrees):
-    for i, pos in enumerate(pos):
-      self._sigs[pos].setValue(self.getDegreeValue(degrees[i]))
+
+  def getFreqs(self):
+    return [x.value for x in self._sigs]
 
 if __name__ == '__main__':
   s = Server().boot()

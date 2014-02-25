@@ -5,7 +5,7 @@ from random import randint
 from random import choice
 
 s = Server().boot()
-beat_time = Sig(0.3)
+beat_time = Sig(1)
 
 count = 0
 # Generate the pitches manager
@@ -13,40 +13,38 @@ p = Pitches(degrees=[0,5,7], tuning='just')
 
 # Generate Adsr envelopes
 shells = [
-  ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len),
-  ShellAdsr(dur=beat_time.value, dur_fact=.5,num=p.len)
+  ShellAdsr(dur=beat_time.value, dur_fact=.4, num=p.len),
+  ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len)
 ]
-
+ 
 # Generate the envelope manager
-env = ShellMode(p.len, shells[0].getEnvs())
+env = ShellMode(shell=shells[0])
 
-sin = Sine(freq=p.getPitches(), mul=env.getEnvs()).out()
+sin = Sine(freq=p.getPitches(), mul=env.getEnvs())
+mix = Pan(sin).out()
 m = Metro(beat_time, poly=1).play()
 
 def play_me2():
   global count
-  if (count%3==0):
-    beat_time.setValue(randint(2, 8)*.1)
-    env.setEnvs(shells[randint(0,1)].getEnvs())
-  
-  if (count%2==0):
-    p.setDegrees(pos=[1], degrees=[4])
-  else:
-    p.setDegrees(pos=[1], degrees=[3])
 
   if (count%4==0):
-    p.setRoot(100*randint(3,5))
+    root = 100*randint(2,6)
+    p.setRoot(root)
     p.setDegrees(pos=[2], degrees=[randint(7,12)])
+
+  if (count%2==0):
+    p.setDegrees(pos=[1], degrees=[4])
+    bt = randint(2,6) *.1
+    beat_time.setValue(bt)
+    shell_num = randint(0,1)
+    env.setEnvs(shells[shell_num])
+    env.setEnvsDur(beat_time.value)
+  else:
+    p.setDegrees(pos=[1], degrees=[3])
 
   env.play()
   count += 1
 
-def update_durs():
-  for shell in shells:
-    shell.setEnvsDur(beat_time.value)
-
-c = Change(beat_time)
-t = TrigFunc(c, update_durs)
 tf = TrigFunc(m, play_me2)
 
 s.gui(locals())
