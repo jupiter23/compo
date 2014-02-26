@@ -101,7 +101,6 @@ class ShellAdsr(Shell):
   # Set the shape of the Adsr
   def setShellDur(self, dur):
     dur = dur*self._dur_fact
-    print 'ShellAdsr dur: ', dur
     self._dur = dur
     for env in self._envs:
       env.setAttack(dur*.05)

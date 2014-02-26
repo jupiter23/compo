@@ -151,8 +151,8 @@ class Pitches():
   def getRoot(self):
     return self._root
 
+  # Return the frequency value for each pitch
   def getFreqs(self):
-#    return self._freqs
     return [x.value for x in self._sigs]
 
 if __name__ == '__main__':
@@ -186,7 +186,6 @@ if __name__ == '__main__':
 #      factor = 0.66666 # fifth
 #      factor=0.999
       p.setRoot(p.getRoot()*factor)
-      print p.getFreqs()
 
   # Change just one tone from the list of pitches
   def changeBase():

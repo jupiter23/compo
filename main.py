@@ -10,7 +10,7 @@ s = Server().boot()
 # Generate the pitches manager (see pitches.py)
 p = Pitches(degrees=[0,4,7], tuning='just')
 
-beat_time = Sig(.2)
+beat_time = Sig(2)
 m = Metro(beat_time, poly=1).play()
 
 # Generate Adsr envelopes (see shell.py)
@@ -25,12 +25,12 @@ env = ShellManager(shell=shells[1])
 sin = Sine(freq=p.getPitches(), mul=env.getShell())
 mix = Pan(sin).out()
 
+count = 0
 
 # Strummer move (see move.py)
 strum = Strummer(inst=env)
 
-count = 0
-def play_me3():
+def test_strum():
   global count
   if (count%3==0):
     beat_time.setValue(3)
@@ -71,72 +71,5 @@ def play_me3():
   
   count+=1
   
-tf = TrigFunc(m, play_me3)
-
+tf = TrigFunc(m, test_strum)
 s.gui(locals())
-
-
-
-
-# Another test
-def play_me2():
-  global count
-
-  if (count%4==0):
-    root = 100*randint(2,6)
-    p.setRoot(root)
-    p.setDegrees(pos=[2], degrees=[randint(7,12)])
-
-  if (count%2==0):
-    p.setDegrees(pos=[1], degrees=[4])
-    bt = randint(2,6) *.1
-    beat_time.setValue(bt)
-    shell_num = randint(0,1)
-    env.setEnvs(shells[shell_num])
-    env.setEnvsDur(beat_time.value)
-  else:
-    p.setDegrees(pos=[1], degrees=[3])
-
-  env.play()
-  count += 1
-
-
-
-
-
-
-
-# MORE STUFF
-if (False):
-  env1 = Adsr(dur=0.5)
-  env2 = Adsr(dur=0.25)
-  env = Sig(env1)
-
-
-  def play_me():
-    global count
-    if (count %2):
-      env.setValue(env2)
-      env2.play()
-    else:
-      env.setValue(env1)
-      env1.play()
-    count += 1
-
-
-#sin = Sine(freq=200, mul=env).out()
-#m = Metro(1, poly=1).play()
-#te = TrigFunc(m, play_me)
-
-#tf = TrigFunc(m, snd.play)
-#te = TrigEnv(m, table=env, dur=.25, mul=.2)
-
-if(False):
-  snd = SoundAdsr()
-  print len(snd.getEnvs());
-  env = HannTable()
-  p = Pitches(degrees=[0,5,7])
-  m = Metro(.5, poly=1).play()
-  te = TrigEnv(m, table=env, dur=.25, mul=.2)
-#  tf = TrigFunc(m, notes.getNote)
-  sin = Sine(freq=p.getPitches(), mul=te).out()
