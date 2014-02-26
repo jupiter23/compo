@@ -50,11 +50,26 @@ class ShellManager():
     return self._shell.getDur()
 
 class Shell():
+  """
+  Parent class for Shell objetcs.
+  
+  :Args:
+
+    num: number of Adrs objects
+
+    dur: Adsr dur
+
+    dur_fact: multiplier for the Adsr dur parameter
+
+  """
   def __init__(self, dur, num=1, dur_fact=1):
     self._num = num
     self._dur_fact = dur_fact
     dur = dur*dur_fact
     self._dur = dur
+
+  def setShellDur(self):
+    raise NotImplementedError('Shell class descendants need to implement setShellDur')  
        
   def getEnvs(self):
     return self._envs
