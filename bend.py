@@ -25,8 +25,9 @@ env = ShellManager(shell=shells[1])
 
 sin = SuperSaw(freq=p.getPitches(), mul=env.getShell())
 mix = Pan(sin).out()
+freqs=p.getFreqs()
 
-bender = Bender(p, pos=[0], target_freq=[p.getFreqs()[1]], dur=[1.5], go_back_dur=[0.5], go_back=True)
+bender = Bender(p, pos=[0], target_freq=[freqs[1]], seg_type='lin', dur=[1.05], go_back_dur=[0.75], go_back=True)
 count = 0
 def play_me4():
   global count

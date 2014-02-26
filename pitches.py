@@ -100,7 +100,7 @@ class Pitches():
     self._tuning = tuning
     self._num_tones = num_tones
     self._makeFreqLists()
-    if (reset):
+    if reset:
       # Recalculate pitch values and Sig objects
       self.setPitchesByDegree(degrees=None)
 
@@ -114,10 +114,10 @@ class Pitches():
 
   # Set instance Pitches from scale degree
   def setPitchesByDegree(self, degrees=None, reset=True):
-    if (degrees==None):
+    if degrees==None:
       degrees=self._degrees
     self._pitches=[self.getDegreeValue(x) for x in degrees]
-    if (reset):
+    if reset:
       self.setSigValues()
 
     
@@ -143,7 +143,7 @@ class Pitches():
          
   # Return all the Sig objects or the Sig objects indicated by the pos argument
   def getPitches(self, pos='all'):
-    if (pos=='all'):
+    if pos=='all':
       return self._sigs
     return [self._sigs[i] for i in pos]
    
@@ -173,14 +173,14 @@ if __name__ == '__main__':
   def changeDegree():
     global count
     degrees=[0,3,5,12]
-    if (count%2):
+    if count%2:
       degrees=[0,5,7,13]
     p.setDegrees(pos=[0,1,2,3], degrees=degrees)
     count+=1
   
   # Change the root frequency at regular interval.
   def changeRoot():
-    if (p.getRoot() > 50):
+    if p.getRoot() > 50:
 #      factor = 0.888 #major second
       factor = 0.9497 #minor second
 #      factor = 0.66666 # fifth
