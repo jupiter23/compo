@@ -63,12 +63,12 @@ class Bender():
   
   def setBend(self, inst, pos, target_freq, dur, seg_type, go_back=False, go_back_dur=[0]):
     self._seg_type = Linseg if seg_type == 'lin' else Expseg 
-    self._inst=inst
-    self._pos=pos
-    self._target_freq=target_freq
-    self._dur=dur
-    self._go_back=go_back
-    self._go_back_dur=go_back_dur
+    self._inst = inst
+    self._pos = pos
+    self._target_freq = target_freq
+    self._dur = dur
+    self._go_back = go_back
+    self._go_back_dur = go_back_dur
     self._orig_freqs = None
     self._pitches = inst.getPitches(pos)
     self._bends = [None for x in pos]
@@ -77,7 +77,7 @@ class Bender():
     # Bring the frequency back to it's original value
     if (go_back):
       for i, pos_i in enumerate(pos):
-        orig=self._orig_freqs[pos_i]
+        orig = self._orig_freqs[pos_i]
         # Create Linseg or Expseg depending on the value of the seg_type parameter
         self._bends[i] = self._seg_type([
           (0,0),
@@ -88,7 +88,7 @@ class Bender():
     # Remain at the new pitch value
     else:
       for i, pos_i in enumerate(pos):
-        orig=self._orig_freqs[pos_i]
+        orig = self._orig_freqs[pos_i]
         self._bends[i] = Linseg([
           (0,0),
           (dur[i%len(dur)], target_freq[i%len(target_freq)] - orig),
@@ -102,7 +102,7 @@ class Bender():
   # @TODO this method has not been tested yet
   def unsetBend(self, mode='restore'):
     for i, pos in enumerate(self._pos):
-      if mode=='restore':
+      if mode == 'restore':
         self._pitches[pos].setValue(self._orig_freqs[pos])
       else:
         # Keep the pitches to their current value.
