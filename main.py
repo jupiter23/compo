@@ -10,7 +10,7 @@ s = Server().boot()
 # Generate the pitches manager (see pitches.py)
 p = Pitches(degrees=[0,4,7], tuning='just')
 
-beat_time = Sig(2)
+beat_time = Sig(.5)
 m = Metro(beat_time, poly=1).play()
 
 # Generate Adsr envelopes (see shell.py)
@@ -33,27 +33,17 @@ strum = Strummer(inst=env)
 def test_strum():
   global count
   if (count%3==0):
-    beat_time.setValue(3)
-#    shell_num = 0
+    beat_time.setValue(.5)
   else:
-    beat_time.setValue(5)
-#    shell_num = 1
+    beat_time.setValue(.75)
 
   # Set a random value for the metro time.
-#  beat_time.setValue(randint(3,5))
-  # A glitch is sounded whith values > than the precedent value, but not with values <
-  # When new value > previous value, it seems the envelope is not read from the beginning.
-  print 'beat_time.value: ', beat_time.value
-
-  # Providing a constant value for the metronome does not create glitches.
-#  beat_time.setValue(.2)
+  beat_time.setValue(randint(4,6)*.1)
 
   # Select envelopes to read.
-#  shell_num = randint(0,1)
+  shell_num = randint(0,1)
 
-  shell_num = 1
-  # Update the envelope durations (env is an instance of ShellManager,
-  # shells[shell_num] an instance of ShellAdsr).
+  # Update the envelope durations (env is an instance of ShellManager
   env.setShell(shells[shell_num])
   env.setShellDur(beat_time.value)
   
