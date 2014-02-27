@@ -41,28 +41,28 @@ def test_strum():
 
   # Set a random value for the metro time.
 #  beat_time.setValue(randint(3,5))
-  # A glitch is sounded whith values > than the precendent value, but not with values <
-  # When new value > previous value, it seems the enveloppe is not read from the beginning.
+  # A glitch is sounded whith values > than the precedent value, but not with values <
+  # When new value > previous value, it seems the envelope is not read from the beginning.
   print 'beat_time.value: ', beat_time.value
 
   # Providing a constant value for the metronome does not create glitches.
 #  beat_time.setValue(.2)
 
-  # Sellect enveloppes to read.
+  # Select envelopes to read.
 #  shell_num = randint(0,1)
 
   shell_num = 1
-  # Update the enveloppe durations (env is an instance of ShellManager,
+  # Update the envelope durations (env is an instance of ShellManager,
   # shells[shell_num] an instance of ShellAdsr).
   env.setShell(shells[shell_num])
   env.setShellDur(beat_time.value)
   
-  # diff_time the difference between the metro time and the enveloppe time.  
+  # diff_time the difference between the metro time and the envelope time.  
   diff_time = beat_time.value - env.getShellDur()
 
-  # Lapse_value is diff_time divided by the number of enveloppes to read.
-  # The first enveloppe should be read at 0, and each subsequent enveloppe at lapse_value * i where i is
-  # the enveloppe's index in the list of enveloppes, up to i = n - 1 where n is the number of enveloppes. 
+  # Lapse_value is diff_time divided by the number of envelopes to read.
+  # The first envelope should be read at 0, and each subsequent envelope at lapse_value * i where i is
+  # the enveloppe's index in the list of envelopes, up to i = n - 1 where n is the number of envelopes. 
   lapse_value = diff_time / env.getLen()
 
   # strum is an instance of Strummer    
