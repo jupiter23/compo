@@ -10,7 +10,7 @@ s = Server().boot()
 # Generate the pitches manager (see pitches.py)
 p = Pitches(degrees=[0,4,7], tuning='just')
 
-beat_time = Sig(.5)
+beat_time = Sig(.3)
 m = Metro(beat_time, poly=1).play()
 
 # Generate Adsr envelopes (see shell.py)
@@ -39,9 +39,11 @@ def test_strum():
 
   # Set a random value for the metro time.
   beat_time.setValue(randint(4,6)*.2)
+  print 'beat_time.value: ', beat_time.value
 
   # Select envelopes to read.
   shell_num = randint(0,1)
+  print 'shell num: ', shell_num
 
   # Update the envelope durations (env is an instance of ShellManager
   env.setShell(shells[shell_num])
