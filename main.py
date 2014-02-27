@@ -32,10 +32,10 @@ strum = Strummer(inst=env)
 
 def test_strum():
   global count
-  if (count%3==0):
-    beat_time.setValue(.5)
-  else:
-    beat_time.setValue(.75)
+#  if (count%3==0):
+#    beat_time.setValue(.5)
+#  else:
+#    beat_time.setValue(.75)
 
   # Set a random value for the metro time.
   beat_time.setValue(randint(4,6)*.1)
