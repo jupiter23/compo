@@ -38,7 +38,7 @@ def test_strum():
 #    beat_time.setValue(.75)
 
   # Set a random value for the metro time.
-  beat_time.setValue(randint(4,6)*.1)
+  beat_time.setValue(randint(4,6)*.2)
 
   # Select envelopes to read.
   shell_num = randint(0,1)
