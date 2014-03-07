@@ -68,7 +68,7 @@ class Shell():
     dur = dur*dur_fact
     self._dur = dur
 
-  def setShellDur(self):
+  def setShellDur(self, dur):
     raise NotImplementedError('Shell class descendants need to implement setShellDur')  
        
   def getEnvs(self):
@@ -79,6 +79,24 @@ class Shell():
 
   def getDur(self):
     return self._dur
+
+class EnvWrap():
+  """
+  Provides an envelope player wrapper.
+  :Args:
+    wrapped: List of Pyo tables that need to be red on a Trig.
+  """
+  def __init__(self, wrapped):
+    self._wrapped = wrapped
+    self._trigs = [Trig() for x in range(0, len(self._wrapped))]
+    for i, wrap in enumerate(self._wrapped):
+      wrap.setInput(self._trigs[i])     
+    
+  def play(self, pos='all'):
+    if pos == 'all':
+      for t in self._trigs:
+        t.play()
+    
  
 class ShellAdsr(Shell):
   """
