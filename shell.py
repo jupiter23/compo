@@ -143,7 +143,6 @@ class ShellHann(Shell):
 
     # Each envelope has the same dur
     if not items_dur_fact:
-      print 'fnord'
       self._dur = [dur for i in self._num_list]
     # Apply a factor specific to each envelope
     else:
@@ -173,6 +172,8 @@ class ShellAdsr(Shell):
     Shell.__init__(self, num=num, dur=dur, dur_fact=dur_fact)
     self._envs = [Adsr(attack=dur*.05, decay=dur*.25, sustain=.6, release=dur*.1, dur=dur, mul=num*.1)
       for i in range(1, num+1)]
+    self._trigs = self._envs
+
 
   # Set the shape of the Adsr
   def setShellDur(self, dur):
