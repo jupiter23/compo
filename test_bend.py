@@ -10,7 +10,8 @@ s = Server().boot()
 # Generate the pitches manager (see pitches.py)
 p = Pitches(degrees=[0,2], tuning='just', root=440)
 
-long = .45
+#long = .45
+long = 1
 short = long*.25
 beat_time = Sig(long)
 
@@ -49,14 +50,16 @@ def play_me4():
   count += 1
 
 def bend_me():
-#     root = choice([750,800,755,805,760,765,770,775])*choice([1,1.02,1.03,1.035,1.005])*.0625
-    root = choice([40.8,46,70])*choice([1,1.02,1.03,1.035,1.005])
+    root = choice([750,800,755,805,760,765,770,775])*choice([1,1.02,1.03,1.035,1.005])*.0625
+#    root = choice([40.8,46,70])*choice([1,1.02,1.03,1.035,1.005])
     p.setRoot(root)
     freqs = p.getFreqs()
     bender = Bender(p, pos=[0], target_freq=[freqs[1]], seg_type='lin', dur=[long*1.05], go_back_dur=[short*3.], go_back=True)
     bender.bend()
 
+# Play the envelopes
 tf = TrigFunc(m, play_me4)
+# Bend the pitches
 tf2 = TrigFunc(m2, bend_me)
 
 s.gui(locals())
