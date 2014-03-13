@@ -1,5 +1,6 @@
 compo
 =====
+By Jean-Michel Lavarene
 Get the latest version of this project here:
 https://github.com/jupiter23/compo
 
