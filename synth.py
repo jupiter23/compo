@@ -52,6 +52,8 @@ if __name__ == '__main__':
   
   p = Pitches(degrees=[0], root=400)
 #   p = Pitches(degrees=[0], root=200)
+
+  # Test the RissetSnare synth
   snr = RissetSnare(pitches=p, dur=2, noise_freq=500, randi_freq=400)
   mul_sig = Sig(.8)
   out = snr.out()

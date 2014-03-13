@@ -182,9 +182,9 @@ if __name__ == '__main__':
   def changeRoot():
     if p.getRoot() > 50:
 #      factor = 0.888 #major second
-      factor = 0.9497 #minor second
+#     factor = 0.9497 #minor second
 #      factor = 0.66666 # fifth
-#      factor=0.999
+      factor=0.99
       p.setRoot(p.getRoot()*factor)
 
   # Change just one tone from the list of pitches
@@ -197,12 +197,13 @@ if __name__ == '__main__':
     count += 1
       
   # Provide all the pitches to a Sine object 
-  out = Mix(Sine(p.getPitches()), voices=2, mul=0.25).out()
+#  out = Mix(Sine(p.getPitches()), voices=2, mul=0.25).out()
 
   # Provide one of the pitches to a SuperSaw, the others to a Sine
-#  ss = SuperSaw(p.getPitches([0]))
-#  sine = Sine(p.getPitches([1,2,3]))
-#  out = Pan(Mix([ss, sine], voices=2, mul=0.25)).out()
+  ss = SuperSaw(p.getPitches([0]))
+  sine = Sine(p.getPitches([1,2,3]))
+  out = Pan(Mix([ss, sine], voices=2, mul=0.25)).out()
 
-  pat = Pattern(alternTuning, time=0.5).play()
+  # Try calling any of the following testing functions: changeBase, changeRoot, changeDegree, alternTuning
+  pat = Pattern(changeRoot, time=0.5).play()
   s.gui(locals())
