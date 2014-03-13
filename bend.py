@@ -10,7 +10,7 @@ s = Server().boot()
 # Generate the pitches manager (see pitches.py)
 p = Pitches(degrees=[0,2], tuning='just', root=440)
 
-long = 2
+long = .45
 short = long*.25
 beat_time = Sig(long)
 
