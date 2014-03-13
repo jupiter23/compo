@@ -45,6 +45,9 @@ def test_strum():
   env.setShell(shells[shell_num])
   env.setShellDur(beat_time.value)
   
+  
+  # @TODO the following calculations should be done within the Strummer class.
+  
   # diff_time the difference between the metro time and the envelope time.  
   diff_time = beat_time.value - env.getShellDur()
 
