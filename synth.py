@@ -32,6 +32,7 @@ class RissetSnare(Shell):
     self.t2.setDur(dur)
 
   def out(self):
+    # @TODO turn this into a loop and compress instead of using Mix()
     return Mix([self.noise + self.inharms[i] + self.funds[i] for i in range(0, self.num)], mul=(1./self.num) * .3, voices=2).out()
 
 class Ring426():

@@ -65,8 +65,7 @@ class Shell():
   def __init__(self, dur, num=1, dur_fact=1):
     self._num = num
     self._dur_fact = dur_fact
-    dur = dur*dur_fact
-    self._dur = dur
+    self._dur = dur*dur_fact
 
   def setShellDur(self, dur):
     raise NotImplementedError('Shell class descendants need to implement setShellDur')  
@@ -170,7 +169,7 @@ class ShellAdsr(Shell):
   """
   def __init__(self, dur, num=1, dur_fact=1):
     Shell.__init__(self, num=num, dur=dur, dur_fact=dur_fact)
-    self._envs = [Adsr(attack=dur*.05, decay=dur*.25, sustain=.6, release=dur*.1, dur=dur, mul=num*.1)
+    self._envs = [Adsr(attack=self._dur*.05, decay=self._dur*.25, sustain=.6, release=self._dur*.1, dur=self._dur, mul=num*.1)
       for i in range(1, num+1)]
     self._trigs = self._envs
 

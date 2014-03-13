@@ -28,7 +28,7 @@ class Strummer():
   # Read each enveloppe, one at a time
   def strum(self):
     for i in range(0, self._len):
-      # @DEBUG this calls ShellMode.play(pos=[i])
+      # This calls ShellMode.play(pos=[i])
       self.callers[i] = CallAfter(self._inst.play, self._lapse * i, [[i]])
 
 class Bender():
