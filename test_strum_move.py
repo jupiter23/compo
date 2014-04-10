@@ -14,9 +14,15 @@ beat_time = Sig(.3)
 m = Metro(beat_time, poly=1).play()
 
 # Generate Adsr envelopes (see shell.py)
+# shells = [
+#   ShellAdsr(dur=beat_time.value, dur_fact=.4, num=p.len),
+#   ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len)
+# ]
+
+# Generate Adsr envelopes (see shell.py)
 shells = [
-  ShellAdsr(dur=beat_time.value, dur_fact=.4, num=p.len),
-  ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len)
+  ShellHann(dur=beat_time.value, dur_fact=.4, num=p.len),
+  ShellHann(dur=beat_time.value, dur_fact=.8, num=p.len)
 ]
  
 # Generate the envelope manager (see shell.py)
@@ -34,7 +40,7 @@ def test_strum():
   global count
 
   # Set a random value for the metro time.
-  beat_time.setValue(randint(4,6)*.2)
+  beat_time.setValue(randint(4,6)*.1)
   print 'beat_time.value: ', beat_time.value
 
   # Select envelopes to read.
@@ -43,7 +49,7 @@ def test_strum():
 
   # Update the envelope durations (env is an instance of ShellManager
   env.setShell(shells[shell_num])
-  env.setShellDur(beat_time.value)
+  env.setShellDur(beat_time.value*.5)
   
   
   # @TODO the following calculations should be done within the Strummer class.

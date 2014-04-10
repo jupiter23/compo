@@ -142,19 +142,19 @@ class ShellHann(Shell):
 
     # Each envelope has the same dur
     if not items_dur_fact:
-      self._dur = [dur for i in self._num_list]
+      self._dur_list = [dur for i in self._num_list]
     # Apply a factor specific to each envelope
     else:
-      self._dur = [i for i in self._num_list]
+      self._dur_list = [i for i in self._num_list]
       for i, item in enumerate(items_dur_fact):
-        self._dur[i] = dur * items_dur_fact[i%len(items_dur_fact)]
+        self._dur_list[i] = dur * items_dur_fact[i%len(items_dur_fact)]
     
   def setShellDur(self, dur=None, dur_fact=None, items_dur_fact=None):
     if items_dur_fact == None:
       items_dur_fact = self._items_dur_fact
     self.setDurValues(dur=dur, dur_fact=dur_fact, items_dur_fact=items_dur_fact)
     for i, env in enumerate(self._envs):
-      env.setDur(self._dur[i])
+      env.setDur(self._dur_list[i])
 
 class ShellAdsr(Shell):
   """

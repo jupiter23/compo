@@ -14,9 +14,15 @@ beat_time = Sig(2)
 m = Metro(beat_time, poly=1).play()
 
 # Generate Adsr envelopes (see shell.py)
+#shells = [
+#  ShellAdsr(dur=beat_time.value, dur_fact=.4, num=p.len),
+#  ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len)
+#]
+
+# Generate Adsr envelopes (see shell.py)
 shells = [
-  ShellAdsr(dur=beat_time.value, dur_fact=.4, num=p.len),
-  ShellAdsr(dur=beat_time.value, dur_fact=.8, num=p.len)
+  ShellHann(dur=beat_time.value, dur_fact=.4, num=p.len),
+  ShellHann(dur=beat_time.value, dur_fact=.8, num=p.len)
 ]
  
 # Generate the envelope manager (see shell.py)
